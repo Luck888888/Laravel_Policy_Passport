@@ -1,2 +1,3 @@
-# Laravel_Policy_Passport
-Use in the admin panel of access via Policy, api implementation via Passport. The project was made using laradok+doker.
+Laravel version - 8;
+MySql version - 8;
+Php version - 7.4;
