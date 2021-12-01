@@ -1,12 +1,16 @@
 <template>
     <div>
         <SinglePostComponent></SinglePostComponent>
+        <CreateComponent></CreateComponent>
+        <IndexComponent></IndexComponent>
 
     </div>
 </template>
 
 <script>
 import SinglePostComponent from "./SinglePostComponent";
+import CreateComponent from "./CreateComponent";
+import IndexComponent from "./IndexComponent";
 
 export default {
     name: "PostComponent",
@@ -15,13 +19,10 @@ export default {
         return {}
     },
 
-
-    methods: {},
-
-    computed: {},
-
     components: {
-        SinglePostComponent
+        SinglePostComponent,
+        CreateComponent,
+        IndexComponent
     },
 
 }

@@ -1,6 +1,8 @@
 <template>
-    <div>
-        Vue.js!!!
+    <div class="w-25 mx-auto">
+        <div class="mb-3">
+            Vue.js
+        </div>
     </div>
 </template>
 
