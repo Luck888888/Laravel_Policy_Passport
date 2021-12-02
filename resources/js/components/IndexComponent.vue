@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <table class="table table-striped">
             <thead>
             <tr>
@@ -14,24 +13,8 @@
             </thead>
             <tbody>
             <template v-for="visitor in visitors">
-                <tr :class="isEdit(visitor.id) ? 'd-none' : ''">
-                    <th scope="row">{{ visitor.id }}</th>
-                    <td>{{ visitor.name }}</td>
-                    <td>{{ visitor.age }}</td>
-                    <td>{{ visitor.job }}</td>
-                    <td><a href="#"
-                           @click.prevent="changeEditVisitorId(visitor.id, visitor.name,visitor.age,visitor.job )"
-                           class="btn btn-success">Edit</a></td>
-                    <td><a href="#" @click.prevent="deleteVisitor(visitor.id)" class="btn btn-danger">Delete</a></td>
-                </tr>
-                <tr :class="isEdit(visitor.id) ? '' : 'd-none'">
-                    <th scope="row">{{ visitor.id }}</th>
-                    <td><input type="text" v-model="name" class="form-control"></td>
-                    <td><input type="number" v-model="age" class="form-control"></td>
-                    <td><input type="text" v-model="job" class="form-control"></td>
-                    <td><a href="#" @click.prevent="updateVisitor(visitor.id)" class="btn btn-success">Update</a></td>
-                    <td><a href="#" @click.prevent="deleteVisitor(visitor.id)" class="btn btn-danger">Delete</a></td>
-                </tr>
+                <ShowComponent :visitor="visitor"></ShowComponent>
+                <EditComponent :visitor="visitor" :ref="`edit_${visitor.id}`"></EditComponent>
             </template>
             </tbody>
         </table>
@@ -39,6 +22,9 @@
 </template>
 
 <script>
+import EditComponent from "./EditComponent";
+import ShowComponent from "./ShowComponent";
+
 export default {
     name: "IndexComponent",
 
@@ -56,6 +42,11 @@ export default {
         this.getVisitor()
     },
 
+    components: {
+        EditComponent,
+        ShowComponent
+    },
+
     methods: {
         getVisitor() {
             axios.get('/api/people')
@@ -64,30 +55,21 @@ export default {
                 })
         },
 
-        updateVisitor(id) {
-            this.editVisitorId = null
-            axios.patch(`/api/people/${id}`, {name: this.name, age: this.age, job: this.job})
-                .then(res => {
-                    this.getVisitor()
-                })
-        },
-
-        deleteVisitor(id) {
-            axios.delete(`/api/people/${id}`)
-                .then(res => {
-                    this.getVisitor()
-                })
-        },
-
         changeEditVisitorId(id, name, age, job) {
             this.editVisitorId = id
-            this.name = name
-            this.age = age
-            this.job = job
+            let editName = `edit_${id}`
+            let fullEditName = this.$refs[editName][0];
+            fullEditName.name = name
+            fullEditName.age = age
+            fullEditName.job = job
         },
 
         isEdit(id) {
             return this.editVisitorId === id
+        },
+
+        indexLog() {
+            console.log('this is index component');
         }
     }
 }

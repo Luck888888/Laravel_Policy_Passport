@@ -2,7 +2,7 @@
     <div>
         <SinglePostComponent></SinglePostComponent>
         <CreateComponent></CreateComponent>
-        <IndexComponent></IndexComponent>
+        <IndexComponent ref="index"></IndexComponent>
 
     </div>
 </template>
@@ -17,6 +17,17 @@ export default {
 
     data() {
         return {}
+    },
+
+    mounted() {
+        console.log(this.$refs);
+
+    },
+
+    methods:{
+        parentLog(){
+            console.log('this is parent component');
+        }
     },
 
     components: {
