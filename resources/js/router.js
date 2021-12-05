@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import VueRouter from "vue-router";
-import PostComponent from "./components/PostComponent";
-import TagComponent from "./components/TagComponent";
 
 Vue.use(VueRouter)
 
@@ -10,14 +8,27 @@ export default new VueRouter({
 
     routes: [
         {
-            path: '/',
-            component:PostComponent
+            path: '/visitors',
+            component: () => import('./components/Visitor/Index'),
+            name: 'visitor.index'
         },
 
         {
-            path: '/tags',
-            component:TagComponent
+            path: '/visitors/create',
+            component: () => import('./components/Visitor/Create'),
+            name: 'visitor.create'
         },
 
+        {
+            path: '/visitors/:id/edit',
+            component: () => import('./components/Visitor/Edit'),
+            name: 'visitor.edit'
+        },
+
+        {
+            path: '/visitors/show',
+            component: () => import('./components/Visitor/Show'),
+            name: 'visitor.show'
+        },
     ]
 })

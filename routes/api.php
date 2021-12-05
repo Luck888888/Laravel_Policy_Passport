@@ -28,6 +28,7 @@ Route::middleware('auth:api')->get('/posts', [AuthController::class, 'getPostLis
 Route::group(['namespace' => 'Visitor', 'prefix' => 'people'], function () {
     Route::post('/', [StoreController::class, 'create']);
     Route::get('/', [StoreController::class, 'index']);
+    Route::get('/{visitor}', [StoreController::class, 'show']);
     Route::patch('/{visitor}', [StoreController::class, 'update']);
     Route::delete('/{visitor}', [StoreController::class, 'delete']);
 });

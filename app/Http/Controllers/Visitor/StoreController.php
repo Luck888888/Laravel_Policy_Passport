@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Visitor;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Visitor\StoreRequest;
 use App\Http\Requests\Visitor\UpdateRequest;
+use App\Http\Resources\Visitor\VisitorResource;
 use App\Models\Visitor;
 
 class StoreController extends Controller
@@ -13,22 +14,27 @@ class StoreController extends Controller
     public function create(StoreRequest $request)
     {
         $data = $request->validated();
-        $visitor = Visitor::create($data);
+        Visitor::create($data);
 
-        return $visitor;
+        return response([]);
     }
 
     public function index()
     {
         $visitor = Visitor::all();
-        return $visitor;
+        return VisitorResource::collection($visitor);
+    }
+
+    public function show(Visitor $visitor){
+
+        return new VisitorResource($visitor);
     }
 
     public function update(UpdateRequest $request, Visitor $visitor)
     {
         $data = $request->validated();
         $visitor->update($data);
-        return $visitor;
+        return response([]);
     }
 
     public function delete(Visitor $visitor)
