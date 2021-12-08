@@ -44,30 +44,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Index",
-  data: function data() {
-    return {
-      visitors: null
-    };
-  },
   mounted: function mounted() {
-    this.getVisitors();
+    this.$store.dispatch('getPeople');
   },
-  methods: {
-    getVisitors: function getVisitors() {
-      var _this = this;
-
-      axios.get('api/people').then(function (res) {
-        _this.visitors = res.data.data;
-      });
-    },
-    deleteVisitor: function deleteVisitor(id) {
-      var _this2 = this;
-
-      axios["delete"]("/api/people/".concat(id)).then(function (res) {
-        _this2.getVisitors();
-      });
+  methods: {},
+  computed: {
+    people: function people() {
+      return this.$store.getters.people;
     }
   }
 });
@@ -164,7 +153,7 @@ var render = function () {
       _vm._v(" "),
       _c(
         "tbody",
-        _vm._l(_vm.visitors, function (visitor) {
+        _vm._l(_vm.people, function (visitor) {
           return _c("tr", [
             _c("th", { attrs: { scope: "row" } }, [_vm._v(_vm._s(visitor.id))]),
             _vm._v(" "),
@@ -178,7 +167,7 @@ var render = function () {
                       to: { name: "visitor.show", params: { id: visitor.id } },
                     },
                   },
-                  [_vm._v(" " + _vm._s(visitor.name))]
+                  [_vm._v(" " + _vm._s(visitor.name) + "\n                ")]
                 ),
               ],
               1
@@ -213,7 +202,7 @@ var render = function () {
                   on: {
                     click: function ($event) {
                       $event.preventDefault()
-                      return _vm.deleteVisitor(visitor.id)
+                      return _vm.$store.dispatch("deleteVisitor", visitor.id)
                     },
                   },
                 },

@@ -12,10 +12,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="visitor in visitors">
+            <tr v-for="visitor in people">
                 <th scope="row">{{ visitor.id }}</th>
                 <td>
-                    <router-link :to="{name: 'visitor.show', params: {id: visitor.id}}"> {{ visitor.name }}</router-link>
+                    <router-link :to="{name: 'visitor.show', params: {id: visitor.id}}"> {{
+                            visitor.name
+                        }}
+                    </router-link>
                 </td>
                 <td>{{ visitor.age }}</td>
                 <td>{{ visitor.job }}</td>
@@ -23,7 +26,8 @@
                     <router-link :to="{name: 'visitor.edit', params: { id: visitor.id}}">Edit</router-link>
                 </td>
                 <td>
-                    <a @click.prevent="deleteVisitor(visitor.id)" href="#" class="btn btn-outline-danger">Delete</a>
+                    <a @click.prevent="$store.dispatch('deleteVisitor',visitor.id)" href="#"
+                       class="btn btn-outline-danger">Delete</a>
                 </td>
             </tr>
             </tbody>
@@ -35,29 +39,15 @@
 export default {
     name: "Index",
 
-    data() {
-        return {
-            visitors: null,
-        }
-    },
-
     mounted() {
-        this.getVisitors()
+        this.$store.dispatch('getPeople')
     },
 
-    methods: {
-        getVisitors() {
-            axios.get('api/people')
-                .then(res => {
-                    this.visitors = res.data.data
-                })
-        },
+    methods: {},
 
-        deleteVisitor(id) {
-            axios.delete(`/api/people/${id}`)
-                .then(res => {
-                    this.getVisitors()
-                })
+    computed: {
+        people() {
+            return this.$store.getters.people
         }
     }
 }

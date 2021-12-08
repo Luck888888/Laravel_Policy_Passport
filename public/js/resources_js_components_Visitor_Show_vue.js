@@ -26,23 +26,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Show",
-  data: function data() {
-    return {
-      person: null
-    };
-  },
   mounted: function mounted() {
-    this.getVisitor();
+    this.$store.dispatch('getVisitor', this.$route.params.id);
   },
-  methods: {
-    getVisitor: function getVisitor() {
-      var _this = this;
-
-      axios.get("/api/people/".concat(this.$route.params.id)).then(function (res) {
-        _this.person = res.data.data;
-      });
+  computed: {
+    person: function person() {
+      return this.$store.getters.person;
     }
   }
 });
@@ -138,25 +130,29 @@ var render = function () {
         "div",
         [
           _c("div", [
-            _vm._v("\n       Name: " + _vm._s(this.person.name) + "\n   "),
+            _vm._v("\n        Name: " + _vm._s(_vm.person.name) + "\n    "),
           ]),
           _vm._v(" "),
           _c("div", [
-            _vm._v("\n        Age: " + _vm._s(this.person.age) + "\n    "),
+            _vm._v("\n        Age: " + _vm._s(_vm.person.age) + "\n    "),
           ]),
           _vm._v(" "),
           _c("div", [
-            _vm._v("\n        Job: " + _vm._s(this.person.job) + "\n    "),
+            _vm._v("\n        Job: " + _vm._s(_vm.person.job) + "\n    "),
           ]),
           _vm._v(" "),
           _c(
             "router-link",
             {
               attrs: {
-                to: { name: "visitor.edit", params: { id: this.person.id } },
+                to: { name: "visitor.edit", params: { id: _vm.person.id } },
               },
             },
-            [_vm._v("Edit")]
+            [
+              _c("a", { staticClass: "btn btn-outline-success" }, [
+                _vm._v("Edit"),
+              ]),
+            ]
           ),
         ],
         1
